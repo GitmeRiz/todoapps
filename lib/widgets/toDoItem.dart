@@ -21,7 +21,9 @@ class _toDoItemState extends State<toDoItem> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 20, left: 20, bottom: 10),
+
       child: ListTile(
+        visualDensity: VisualDensity(vertical: 4),
         onTap: () {
           widget.onToDoChanged(widget.todo);
         },
@@ -29,9 +31,12 @@ class _toDoItemState extends State<toDoItem> {
           borderRadius: BorderRadius.circular(15),
         ),
         tileColor: Theme.of(context).colorScheme.primary,
-        leading: Icon(
-          widget.todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
-          color: CupertinoColors.activeBlue,
+        leading: Container(
+          height: double.infinity,
+          child: Icon(
+            widget.todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+            color: CupertinoColors.activeBlue,
+          ),
         ),
         title: Text(
           widget.todo.toDoText!,
@@ -39,6 +44,7 @@ class _toDoItemState extends State<toDoItem> {
               fontSize: 16,
               decoration: widget.todo.isDone ? TextDecoration.lineThrough : null),
         ),
+
         trailing: Container(
           padding: EdgeInsets.all(0),
           height: 40,
