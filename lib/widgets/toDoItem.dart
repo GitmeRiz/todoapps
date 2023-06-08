@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/models/toDo.dart';
 
-class toDoItem extends StatelessWidget {
+class toDoItem extends StatefulWidget {
   final toDo todo;
   final onToDoChanged;
   final onDeleteItem;
@@ -13,26 +13,31 @@ class toDoItem extends StatelessWidget {
       required this.onDeleteItem});
 
   @override
+  State<toDoItem> createState() => _toDoItemState();
+}
+
+class _toDoItemState extends State<toDoItem> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 20, left: 20, bottom: 10),
       child: ListTile(
         onTap: () {
-          onToDoChanged(todo);
+          widget.onToDoChanged(widget.todo);
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
         tileColor: Theme.of(context).colorScheme.primary,
         leading: Icon(
-          todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+          widget.todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
           color: CupertinoColors.activeBlue,
         ),
         title: Text(
-          todo.toDoText!,
+          widget.todo.toDoText!,
           style: TextStyle(
               fontSize: 16,
-              decoration: todo.isDone ? TextDecoration.lineThrough : null),
+              decoration: widget.todo.isDone ? TextDecoration.lineThrough : null),
         ),
         trailing: Container(
           padding: EdgeInsets.all(0),
@@ -42,9 +47,9 @@ class toDoItem extends StatelessWidget {
               color: Colors.red, borderRadius: BorderRadius.circular(5)),
           child: IconButton(
             onPressed: () {
-              onDeleteItem(todo.id);
+              widget.onDeleteItem(widget.todo.id);
             },
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.delete, color: Colors.white,),
             iconSize: 20,
           ),
         ),

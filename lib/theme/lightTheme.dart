@@ -9,7 +9,7 @@ ThemeData lightTheme = ThemeData(
       iconTheme: IconThemeData(color: Colors.black),
     ),
     colorScheme: ColorScheme.light(
-      background: CupertinoColors.systemGrey6,
-      primary: CupertinoColors.systemGrey5,
-      secondary: CupertinoColors.systemGrey3,
+      background: Color.fromRGBO(249, 249, 249, 1),
+      primary: Color.fromRGBO(205, 240, 234, 1),
+      secondary: Color.fromRGBO(196, 223, 223, 1),
     ));

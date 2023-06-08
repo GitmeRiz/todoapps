@@ -32,7 +32,13 @@ class _sidebarState extends State<sidebar> {
               name: 'Settings',
               baseStyle: sidebarTextStyle,
               selectedStyle: sidebarTextStyle),
-          settingPage())
+          settingPage()),
+          // ScreenHiddenDrawer(
+          // ItemHiddenMenu(
+          //     name: 'Logout',
+          //     baseStyle: sidebarTextStyle,
+          //     selectedStyle: sidebarTextStyle),
+          // Logout())
     ];
   }
 

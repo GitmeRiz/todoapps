@@ -26,12 +26,9 @@ class loginPage extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                Icon(
-                  Icons.lock,
-                  size: 100,
-                ),
+                Image.asset('/images/WakLogo.png', height: 200, width: 200,),
                 SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
         
                 Text("Welcome back, login to continue"),
