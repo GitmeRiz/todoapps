@@ -17,7 +17,9 @@ class loginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // color of background
       backgroundColor: Theme.of(context).colorScheme.background,
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -26,36 +28,46 @@ class loginPage extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                Image.asset('/images/WakLogo.png', height: 200, width: 200,),
+
+                // image on login screen
+                Image.asset(
+                  'assets/images/WakLogo.png',
+                  height: 200,
+                  width: 200,
+                ),
                 SizedBox(
                   height: 25,
                 ),
-        
+
+                // text welcome
                 Text("Welcome back, login to continue"),
-        
+
                 SizedBox(
                   height: 20,
                 ),
+
                 // username
                 myTextField(
                   controller: usernameController,
                   hintText: 'Username',
                   obscureText: false,
                 ),
+
                 SizedBox(
                   height: 10,
                 ),
+
                 // password
                 myTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-        
+
                 SizedBox(
                   height: 10,
                 ),
-        
+
                 // forgot password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -63,10 +75,10 @@ class loginPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text("Forgot Password?"),
-                      ],
+                    ],
                   ),
                 ),
-        
+
                 SizedBox(
                   height: 20,
                 ),
@@ -78,14 +90,13 @@ class loginPage extends StatelessWidget {
                     );
                   },
                 ),
-        
+
                 //register
                 SizedBox(height: 120),
                 Divider(
                   thickness: 0.5,
                 ),
                 Text("Haven't register yet? Click here!")
-        
               ],
             ),
           ),

@@ -1,64 +1,54 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/models/toDo.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-class toDoItem extends StatefulWidget {
-  final toDo todo;
-  final onToDoChanged;
-  final onDeleteItem;
-  const toDoItem(
+class toDoItem extends StatelessWidget {
+  final String taskName;
+  final bool taskCompleted;
+  Function(bool?)? onChanged;
+  Function(BuildContext)? deleteTodoItem;
+
+  toDoItem(
       {super.key,
-      required this.todo,
-      required this.onToDoChanged,
-      required this.onDeleteItem});
+      required this.taskName,
+      required this.taskCompleted,
+      required this.onChanged,
+      required this.deleteTodoItem});
 
-  @override
-  State<toDoItem> createState() => _toDoItemState();
-}
-
-class _toDoItemState extends State<toDoItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(right: 20, left: 20, bottom: 10),
-
-      child: ListTile(
-        visualDensity: VisualDensity(vertical: 4),
-        onTap: () {
-          widget.onToDoChanged(widget.todo);
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        tileColor: Theme.of(context).colorScheme.primary,
-        leading: Container(
-          height: double.infinity,
-          child: Icon(
-            widget.todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
-            color: CupertinoColors.activeBlue,
-          ),
-        ),
-        title: Text(
-          widget.todo.toDoText!,
-          style: TextStyle(
-              fontSize: 16,
-              decoration: widget.todo.isDone ? TextDecoration.lineThrough : null),
-        ),
-
-        trailing: Container(
-          padding: EdgeInsets.all(0),
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              color: Colors.red, borderRadius: BorderRadius.circular(5)),
-          child: IconButton(
-            onPressed: () {
-              widget.onDeleteItem(widget.todo.id);
-            },
-            icon: Icon(Icons.delete, color: Colors.white,),
-            iconSize: 20,
-          ),
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
+      child: Slidable(
+        endActionPane: ActionPane(motion: StretchMotion(), children: [
+          SlidableAction(
+            onPressed: deleteTodoItem,
+            icon: Icons.delete,
+            backgroundColor: Colors.red,
+            borderRadius: BorderRadius.circular(12),
+          )
+        ]),
+        child: Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: taskCompleted,
+                  onChanged: onChanged,
+                  activeColor: Colors.black,
+                ),
+                Text(
+                  taskName,
+                  style: TextStyle(
+                      decoration:
+                          taskCompleted ? TextDecoration.lineThrough : null),
+                )
+              ],
+            )),
       ),
     );
   }

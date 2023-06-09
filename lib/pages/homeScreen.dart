@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
+import 'package:todoapp/widgets/addNewTask.dart';
 import 'package:todoapp/widgets/toDoItem.dart';
-import 'package:todoapp/models/toDo.dart';
 
 class homeScreen extends StatefulWidget {
   homeScreen({super.key});
@@ -12,34 +11,63 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<homeScreen> {
-  void _handleToDoChange(toDo todo) {
-    setState(() {
-      todo.isDone = !todo.isDone;
-    });
-  }
-
-  void _addToDoItem(String ToDo) {
-    setState(() {
-      toDosList.add(toDo(
-          id: DateTime.now().microsecondsSinceEpoch.toString(),
-          toDoText: ToDo));
-      _toDoController.clear();
-    });
-  }
-
-  void _deleteToDoItem(String id) {
-    setState(() {
-      toDosList.removeWhere((item) => item.id == id);
-    });
-  }
-
-  final toDosList = toDo.toDoList();
+  List toDosList = [
+    ["Ngopi his", false],
+    ["Ngeteh his", false],
+  ];
   final _toDoController = TextEditingController();
+
+  // checkbox for todo done or not
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      toDosList[index][1] = !toDosList[index][1];
+    });
+  }
+
+  // save new task todo
+  void saveNewTask() {
+    setState(() {
+      toDosList.add([_toDoController.text, false]);
+      _toDoController.clear();
+      Navigator.of(context).pop();
+    });
+  }
+
+// add new task todo
+  void addNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _toDoController,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        });
+  }
+
+  // delete task todo
+  void deleteTask(int index) {
+    setState(() {
+      toDosList.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // button for add new task
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          addNewTask();
+        },
+        child: Icon(Icons.add),
+      ),
+
+      // color of background
       backgroundColor: Theme.of(context).colorScheme.background,
+
+      // appbar
       body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -70,67 +98,18 @@ class _homeScreenState extends State<homeScreen> {
                   ),
                 ),
               ],
-          body: Stack(
-            children: [
-              Expanded(
-                child: ListView(children: [
-                  Container(
-                    padding: EdgeInsets.only( bottom: 20, left: 20),
-                    child: Text(
-                      "All ToDos",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),
-                    ),
-                  ),
-                  for (toDo todo in toDosList)
-                    toDoItem(
-                      todo: todo,
-                      onToDoChanged: _handleToDoChange,
-                      onDeleteItem: _deleteToDoItem,
-                    ),
-                ]),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _toDoController,
-                        decoration: InputDecoration(
-                            hintText: 'What should you do?',
-                            border: InputBorder.none),
-                      ),
-                    )),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20, right: 20),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.secondary,
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(4),
-                          ),
-                          onPressed: () {
-                            _addToDoItem(_toDoController.text);
-                          },
-                          child: Text(
-                            "+",
-                            style: TextStyle(fontSize: 40,),
-                          )),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          )),
+
+          // todoitem
+          body: ListView.builder(
+              itemCount: toDosList.length,
+              itemBuilder: (context, index) {
+                return toDoItem(
+                    taskName: toDosList[index][0],
+                    taskCompleted: toDosList[index][1],
+                    onChanged: (value) => checkBoxChanged(value, index),
+                    deleteTodoItem: (context) => deleteTask(index));
+              })
+          ),
     );
   }
 }

@@ -24,9 +24,13 @@ class _sidebarState extends State<sidebar> {
 
     _page = [
       ScreenHiddenDrawer(
+
+      // home
           ItemHiddenMenu(
               name: 'Home', baseStyle: sidebarTextStyle, selectedStyle: sidebarTextStyle),
           homeScreen()),
+
+      // setting
       ScreenHiddenDrawer(
           ItemHiddenMenu(
               name: 'Settings',
@@ -45,13 +49,10 @@ class _sidebarState extends State<sidebar> {
   @override
   Widget build(BuildContext context) {
     return HiddenDrawerMenu(
-      backgroundColorAppBar: Theme.of(context).colorScheme.primary,
-      elevationAppBar: 0,
       isDraggable: true,
       disableAppBarDefault: true,
       backgroundColorMenu: Theme.of(context).colorScheme.secondary,
       screens: _page,
-      initPositionSelected: 0,
     );
   }
 }
