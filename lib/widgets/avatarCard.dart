@@ -10,11 +10,14 @@ class avatarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(40),
-            child: Image.network(
-                'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Container(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.network(
+                  'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
+            ),
           ),
         ),
         Padding(
