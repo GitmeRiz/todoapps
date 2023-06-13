@@ -31,7 +31,7 @@ class loginPage extends StatelessWidget {
 
                 // image on login screen
                 Image.asset(
-                  'assets/images/WakLogo.png',
+                  'assets/images/LoginScreenLogo.png',
                   height: 200,
                   width: 200,
                 ),

@@ -3,6 +3,7 @@ import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.d
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todoapp/data/database.dart';
 import 'package:todoapp/widgets/addNewTask.dart';
+import 'package:todoapp/widgets/avatarCard.dart';
 import 'package:todoapp/widgets/toDoItem.dart';
 
 class homeScreen extends StatefulWidget {
@@ -13,7 +14,6 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<homeScreen> {
-
   // reference hive box
   final _myBox = Hive.box('mybox');
 
@@ -107,14 +107,12 @@ class _homeScreenState extends State<homeScreen> {
                         ),
                       ),
                       Container(
-                        height: 45,
-                        width: 45,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                              'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
-                        ),
-                      )
+                          height: 45,
+                          width: 45,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
+                          ))
                     ],
                   ),
                 ),
@@ -129,8 +127,7 @@ class _homeScreenState extends State<homeScreen> {
                     taskCompleted: db.toDosList[index][1],
                     onChanged: (value) => checkBoxChanged(value, index),
                     deleteTodoItem: (context) => deleteTask(index));
-              })
-          ),
+              })),
     );
   }
 }
