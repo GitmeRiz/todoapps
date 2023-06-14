@@ -16,6 +16,8 @@ class myTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
+      
+      // text field on login page
       child: TextField(
         controller: controller,
         obscureText: obscureText,
