@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class toDoItem extends StatelessWidget {
+  // final int taskId;
   final String taskName;
   final bool taskCompleted;
   Function(bool?)? onChanged;
@@ -10,10 +11,11 @@ class toDoItem extends StatelessWidget {
 
   toDoItem(
       {super.key,
+      // required this.taskId,
       required this.taskName,
       required this.taskCompleted,
-      required this.onChanged,
-      required this.deleteTodoItem
+      // required this.onChanged,
+      // required this.deleteTodoItem
       });
 
   @override

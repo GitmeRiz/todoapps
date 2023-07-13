@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todoapp/data/controllerBinding.dart';
 import 'package:todoapp/pages/homeScreen.dart';
 import 'package:todoapp/pages/loginPage.dart';
 import 'package:todoapp/pages/sidebar.dart';
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
+      // initialBinding: ControllerBindings(),
       home: loginPage(),
     );
   }
