@@ -13,7 +13,8 @@ class toDoItem extends StatelessWidget {
       required this.taskName,
       required this.taskCompleted,
       required this.onChanged,
-      required this.deleteTodoItem});
+      required this.deleteTodoItem
+      });
 
   @override
   Widget build(BuildContext context) {
