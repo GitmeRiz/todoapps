@@ -115,7 +115,7 @@ class _homeScreenState extends State<homeScreen> {
                           width: 45,
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                                'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
+                                'https://cdn.discordapp.com/attachments/631695642573668363/1135613271764914318/LoginScreenLogo.png'),
                           ))
                     ],
                   ),

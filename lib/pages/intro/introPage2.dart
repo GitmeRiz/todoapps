@@ -8,10 +8,11 @@ class introPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(153, 219, 245, 1),
-      child: Center(
-        child: Text("Page 2"),
-      ),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(
+                  'https://cdn.discordapp.com/attachments/765004308298596362/1135625953914138686/Page2.png'))),
     );
   }
 }
+

@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:todoapp/pages/intro/introPage1.dart';
 import 'package:todoapp/pages/intro/introPage2.dart';
-import 'package:todoapp/pages/intro/introPage3.dart';
+import 'package:todoapp/pages/loginPage.dart';
 
 class welcomePage extends StatefulWidget {
   const welcomePage({super.key});
@@ -27,10 +27,10 @@ class _welcomePageState extends State<welcomePage> {
           controller: _controller,
           onPageChanged: (index) {
             setState(() {
-              lastPage = (index == 2);
+              lastPage = (index == 1);
             });
           },
-          children: [introPage1(), introPage2(), introPage3()],
+          children: [introPage1(), introPage2()],
         ),
         Container(
             alignment: Alignment(0, 0.75),
@@ -40,12 +40,12 @@ class _welcomePageState extends State<welcomePage> {
                 // skip
                 GestureDetector(
                     onTap: () {
-                      _controller.jumpToPage(2);
+                      _controller.jumpToPage(1);
                     },
                     child: Text("Skip")),
 
                 //dot indicator
-                SmoothPageIndicator(controller: _controller, count: 3),
+                SmoothPageIndicator(controller: _controller, count: 2),
 
                 //next
                 lastPage
@@ -55,7 +55,12 @@ class _welcomePageState extends State<welcomePage> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.easeIn);
                         },
-                        child: Text("Done"))
+                        child: GestureDetector(
+                            onTap: () => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => loginPage())),
+                            child: Text("Done")))
                     : GestureDetector(
                         onTap: () {
                           _controller.nextPage(

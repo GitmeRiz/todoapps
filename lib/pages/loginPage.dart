@@ -1,18 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/pages/sidebar.dart';
+import 'package:todoapp/pages/welcomePage.dart';
 import 'package:todoapp/widgets/buttonSignIn.dart';
 import 'package:todoapp/widgets/myTextField.dart';
 
 class loginPage extends StatelessWidget {
   loginPage({super.key});
-
-  // text editing
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  // user sign in
-  void userSignIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +20,7 @@ class loginPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 100,
                 ),
 
                 // image on login screen
@@ -40,49 +34,37 @@ class loginPage extends StatelessWidget {
                 ),
 
                 // text welcome
-                Text("Welcome back, login to continue"),
+                Text("Welcome, click next to continue"),
 
                 SizedBox(
                   height: 20,
                 ),
 
-                // username
-                myTextField(
-                  controller: usernameController,
-                  hintText: 'Username',
-                  obscureText: false,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("How to use app?"),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    GestureDetector(
+                        onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) => welcomePage())),
+                        child: Text("Click me!",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue)))
+                  ],
                 ),
 
                 SizedBox(
                   height: 10,
                 ),
 
-                // password
-                myTextField(
-                  controller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
-
                 SizedBox(
-                  height: 10,
+                  height: 100,
                 ),
-
-                // forgot password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("Forgot Password?"),
-                    ],
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-                buttonSignIn(
+                buttonNext(
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
@@ -90,13 +72,6 @@ class loginPage extends StatelessWidget {
                     );
                   },
                 ),
-
-                //register
-                SizedBox(height: 120),
-                Divider(
-                  thickness: 0.5,
-                ),
-                Text("Haven't register yet? Click here!")
               ],
             ),
           ),

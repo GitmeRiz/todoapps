@@ -13,14 +13,6 @@ class Setting {
   });
 }
 
-final List<Setting> settings = [
-  Setting(
-    title: "Change Password",
-    route: "/",
-    icon: Icons.settings,
-  ),
-];
-
 final List<Setting> settings2 = [
   Setting(
     title: "How to Use App",

@@ -10,39 +10,13 @@ class avatarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
+        Center(
           child: Container(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(
-                  'https://cdn.discordapp.com/attachments/768289273513508906/1039700830955261952/IMG_20221024_151020.jpg'),
+              child: Image.asset('assets/images/LoginScreenLogo.png')
             ),
           ),
         ),
-        Padding(
-            padding: EdgeInsets.only(
-          right: 15,
-        )),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Riz",
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              "Riz@gmail.com",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            )
-          ],
-        )
       ],
     );
   }

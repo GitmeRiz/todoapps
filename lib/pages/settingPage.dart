@@ -20,15 +20,6 @@ class settingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const avatarCard(),
-                const SizedBox(height: 20),
-                const Divider(),
-                const SizedBox(height: 10),
-                Column(
-                  children: List.generate(
-                    settings.length,
-                    (index) => SettingTile(setting: settings[index]),
-                  ),
-                ),
                 const SizedBox(height: 10),
                 const Divider(),
                 const SizedBox(height: 10),

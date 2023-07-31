@@ -3,8 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:todoapp/pages/sidebar.dart';
 
-class buttonSignIn extends StatelessWidget {
-  const buttonSignIn({super.key, required this.onTap});
+class buttonNext extends StatelessWidget {
+  const buttonNext({super.key, required this.onTap});
 
   final Function()? onTap;
 
@@ -19,7 +19,7 @@ class buttonSignIn extends StatelessWidget {
             color: Colors.black, borderRadius: BorderRadius.circular(10)),
         child: const Center(
           child: Text(
-            "Sign In",
+            "Next",
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           ),
