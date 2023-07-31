@@ -14,8 +14,7 @@ class sidebar extends StatefulWidget {
 class _sidebarState extends State<sidebar> {
   List<ScreenHiddenDrawer> _page = [];
 
-  final sidebarTextStyle =
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+  final sidebarTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 
   @override
   void initState() {
@@ -25,9 +24,11 @@ class _sidebarState extends State<sidebar> {
     _page = [
       ScreenHiddenDrawer(
 
-      // home
+          // home
           ItemHiddenMenu(
-              name: 'Home', baseStyle: sidebarTextStyle, selectedStyle: sidebarTextStyle),
+              name: 'Home',
+              baseStyle: sidebarTextStyle,
+              selectedStyle: sidebarTextStyle),
           homeScreen()),
 
       // setting
@@ -37,12 +38,12 @@ class _sidebarState extends State<sidebar> {
               baseStyle: sidebarTextStyle,
               selectedStyle: sidebarTextStyle),
           settingPage()),
-          // ScreenHiddenDrawer(
-          // ItemHiddenMenu(
-          //     name: 'Logout',
-          //     baseStyle: sidebarTextStyle,
-          //     selectedStyle: sidebarTextStyle),
-          // Logout())
+      // ScreenHiddenDrawer(
+      // ItemHiddenMenu(
+      //     name: 'Logout',
+      //     baseStyle: sidebarTextStyle,
+      //     selectedStyle: sidebarTextStyle),
+      // Logout())
     ];
   }
 

@@ -1,16 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
-import 'package:todoapp/data/controller.dart';
 import 'package:todoapp/widgets/addNewTask.dart';
 import 'package:todoapp/widgets/toDoItem.dart';
-import 'package:todoapp/data/toDoModel.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/route_manager.dart';
+import 'package:todoapp/widgets/editTask.dart';
 import 'package:http/http.dart' as http;
+
+import '../widgets/editTask.dart';
 
 class homeScreen extends StatefulWidget {
   homeScreen({super.key});
@@ -20,57 +17,66 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<homeScreen> {
-  final _toDoController = TextEditingController();
-  // final _getController = Get.find<ToDoController>();
+  var _toDoController = TextEditingController();
   var jsonData;
-  int toDoData= 0;
+  var toDoList;
+
+  int toDoData = 0;
   void _getDataFromAPI() async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
-    var response = await http.get(
-        Uri.parse('http://localhost:1337/api/to-dos'),
+    var response = await http.get(Uri.parse('http://localhost:1337/api/to-dos'),
         headers: headers);
     setState(() {
       jsonData = jsonDecode(response.body);
       toDoData = jsonData["meta"]["pagination"]["total"];
-      print(jsonData["data"][1]["attributes"]["toDoName"]);
     });
   }
 
-// void checkBoxChanged(bool? value, int index) {
-//   setState(() {
-//     toDoList[index][1] = !toDoList[index][1];
-//   });
-// }
+  void postAPI() async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+    var response =
+        await http.post(Uri.parse('http://localhost:1337/api/to-dos'),
+            headers: headers,
+            body: jsonEncode({
+              "data": {
+                "toDoName": _toDoController.text,
+              }
+            }));
+  }
 
-// void addNewTask() {
-//     showDialog(
-//         context: context,
-//         builder: (context) {
-//           return DialogBox(
-//             controller: _toDoController,
-//             // onSave: saveNewTask,
-//             onCancel: () => Navigator.of(context).pop(),
-//           );
-//         });
-//   }
+  void addNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _toDoController,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        });
+  }
 
-  // void saveNewTask() {
-  //   setState(() {
-  //     _getController.toDoList.add([_toDoController.text, false]);
-  //     _toDoController.clear();
-  //     Navigator.of(context).pop();
-  //   });
-  // }
+  void saveNewTask() {
+    setState(() {
+      postAPI();
+      _toDoController.clear();
+      _getDataFromAPI();
+      Navigator.of(context).pop();
+    });
+  }
 
-  // delete task todo
-  // void deleteTask(int index) {
-  //   setState(() {
-  //     _getController.toDoList.removeAt(index);
-  //   });
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDataFromAPI();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +84,7 @@ class _homeScreenState extends State<homeScreen> {
       // button for add new task
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _getDataFromAPI();
+          addNewTask();
         },
         child: Icon(Icons.add),
       ),
@@ -119,14 +125,60 @@ class _homeScreenState extends State<homeScreen> {
           // todoitem
           body: ListView.builder(
               itemCount: toDoData,
-              itemBuilder: (data, index){
+              itemBuilder: (data, index) {
+                deleteTaskAPI() async {
+                  var id = jsonData["data"][index]["id"];
+                  Map<String, String> headers = {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  };
+                  var response = await http.delete(
+                      Uri.parse('http://localhost:1337/api/to-dos/$id'),
+                      headers: headers);
+                  _getDataFromAPI();
+                }
+
+                editAPI() async {
+                  var id = jsonData["data"][index]["id"];
+                  Map<String, String> headers = {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  };
+                  var response = await http.put(
+                      Uri.parse('http://localhost:1337/api/to-dos/$id'),
+                      headers: headers,
+                      body: jsonEncode({
+                        "data": {"toDoName": _toDoController.text}
+                      }));
+                  _getDataFromAPI();
+                }
+
+                editTheTask() {
+                  setState(() {
+                    editAPI();
+                    _toDoController.clear();
+                    Navigator.of(context).pop();
+                  });
+                }
+
+                editTask() {
+                  setState(() {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return EditDialogBox(
+                            controller: _toDoController,
+                            onEdit: editTheTask,
+                            onCancelEdit: () => Navigator.of(context).pop(),
+                          );
+                        });
+                  });
+                }
+
                 return toDoItem(
-                    // taskId: _getController.toDoList[index].id,
                     taskName: jsonData["data"][index]["attributes"]["toDoName"],
-                    taskCompleted: true,
-                    // onChanged: (value) => checkBoxChanged(value, index),
-                    // deleteTodoItem: (context) => deleteTask(index)
-                    );
+                    editToDoItem: (context) => editTask(),
+                    deleteTodoItem: (context) => deleteTaskAPI());
               })),
     );
   }

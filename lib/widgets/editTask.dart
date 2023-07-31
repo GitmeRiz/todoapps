@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/widgets/buttonSave.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class DialogBox extends StatelessWidget {
+import '../widgets/editTask.dart';
+
+class EditDialogBox extends StatelessWidget {
   final controller;
-  VoidCallback onSave;
-  VoidCallback onCancel;
-  DialogBox(
+  VoidCallback onEdit;
+  VoidCallback onCancelEdit;
+  EditDialogBox(
       {super.key,
       required this.controller,
-      required this.onSave,
-      required this.onCancel});
+      required this.onEdit,
+      required this.onCancelEdit,
+      });
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       backgroundColor: Theme.of(context).colorScheme.background,
       content: Container(
@@ -24,18 +30,18 @@ class DialogBox extends StatelessWidget {
               // user input
               controller: controller,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Add a new task!"),
+                  border: OutlineInputBorder(), hintText: "Edit your task!"),
             ),
 
             // cancel and save
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                buttonSave(text: "Save", onPressed: onSave),
+                buttonSave(text: "Save", onPressed: onEdit),
                 SizedBox(
                   width: 8,
                 ),
-                buttonSave(text: "Cancel", onPressed: onCancel)
+                buttonSave(text: "Cancel", onPressed: onCancelEdit)
               ],
             )
           ],

@@ -5,17 +5,15 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class toDoItem extends StatelessWidget {
   // final int taskId;
   final String taskName;
-  final bool taskCompleted;
-  Function(bool?)? onChanged;
   Function(BuildContext)? deleteTodoItem;
+  Function(BuildContext)? editToDoItem;
 
   toDoItem(
       {super.key,
       // required this.taskId,
       required this.taskName,
-      required this.taskCompleted,
-      // required this.onChanged,
-      // required this.deleteTodoItem
+      required this.deleteTodoItem,
+      required this.editToDoItem
       });
 
   @override
@@ -29,8 +27,15 @@ class toDoItem extends StatelessWidget {
             icon: Icons.delete,
             backgroundColor: Colors.red,
             borderRadius: BorderRadius.circular(12),
-          )
+          ),
         ]),
+        startActionPane:
+            ActionPane(motion: StretchMotion(), children: [SlidableAction(
+              onPressed: editToDoItem,
+              icon: Icons.edit,
+              backgroundColor: Colors.green,
+              borderRadius: BorderRadius.circular(12),
+            )]),
         child: Container(
             padding: EdgeInsets.all(24),
             decoration: BoxDecoration(
@@ -38,16 +43,8 @@ class toDoItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)),
             child: Row(
               children: [
-                Checkbox(
-                  value: taskCompleted,
-                  onChanged: onChanged,
-                  activeColor: Colors.black,
-                ),
                 Text(
                   taskName,
-                  style: TextStyle(
-                      decoration:
-                          taskCompleted ? TextDecoration.lineThrough : null),
                 )
               ],
             )),
